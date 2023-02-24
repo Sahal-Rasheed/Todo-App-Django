@@ -1,0 +1,74 @@
+{% extends 'index.html' %}
+{% load crispy_forms_tags %}
+
+{% block href %} /todo/ {% endblock href %}
+
+{% block content %}
+
+
+
+
+<div class="col-lg-5 mx-auto shadow-lg p-4 mb-5 bg-white rounded">
+    
+    <div class="container">
+        <div class="p-3 mb-2 bg-dark text-white text-center"><strong>TODO'S</strong> 
+        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+        Owner :- <b style="color: rgb(255, 251, 0);"><u>{{user|title}}</u></b></div>
+
+        {% if todos|length == 0 %}
+
+        <div class="alert alert-secondary">
+            <p style="font-size: 30px;">No Todo's</p>
+        </div>
+
+        {% else %}
+            <form action="" method="get">
+                <input type="text" name="search-area" value="{{search_input}}" placeholder="Search..." class="align-items-start btn btn-lg " style="border-color: black; height: 50px;width:400px">
+                <input type="submit" value="Search" class="ml-2 btn btn-lg " style="font-weight: bold; height: 50px;width:140px ; border-color: rgb(0, 0, 0);">
+            </form>
+
+        <table class = "table border mt-2">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+                </tr>
+                
+                
+            </thead>
+            <tbody>
+                {% for todo in todos %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{todo.title}}</td>
+                    <td>{{todo.description}}</td>
+                    <td>
+                    {% if todo.status == 'C' %}
+                    <div class="container">
+                    <div class="rounded-circle" style="width: 20px; height: 20px; background-color: rgb(29, 177, 69);"></div>
+                    </div>
+                    {% else %}
+                    <div class="container">
+                    <div class="rounded-circle" style="width: 20px; height: 20px; background-color: rgb(215, 215, 215);"></div>
+                    </div>
+                    {% endif %}
+                    </td>
+                    <!-- <td>{{todo.status}}</td> -->
+                    <td><a href="{% url 'update_todo'  todo.id %}" class="btn btn-sm btn-success">Update</a></td>
+                    <td><a href="{% url 'delete_todo'  todo.id %}" class="btn btn-sm btn-danger">Delete</a></td>
+                    
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+        <a href="{% url 'add_todo' %}" class="btn btn-block btn-primary">Add New</a>
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,29 @@
+{% extends 'index.html' %}
+{% load crispy_forms_tags %}
+
+{% block href %} /todo/ {% endblock href %}
+
+{% block content %}
+
+<br>
+    <div class="col-lg-5 mx-auto shadow-lg p-4 mb-5 bg-white rounded border mt-4">
+        <div class="alert alert-success">
+            <h2>Create Account</h2>
+        </div>
+        <div class="p-2">
+            <form action="{% url 'signup' %}" method="post">
+                {% csrf_token %}
+            {{ form.username|as_crispy_field}}
+            {{ form.password1|as_crispy_field}}
+            {{ form.password2|as_crispy_field}}
+    
+            <hr>
+            <input class="btn btn-success" type="submit" value="Create Account">
+            </form>
+        </div>
+    </div>
+
+    
+
+
+{% endblock content %}
